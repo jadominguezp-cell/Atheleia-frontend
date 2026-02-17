@@ -4,12 +4,12 @@ import {
   Heading,
   Text,
   Input,
-  Button,
   VStack,
   FormControl,
   FormLabel,
   useToast,
 } from '@chakra-ui/react'
+import { AnimatedButton } from '../../components/AnimatedButton'
 
 interface SearchScreenProps {
   onSearch: (dniOrRuc: string) => void
@@ -70,14 +70,14 @@ export function SearchScreen({ onSearch }: SearchScreenProps) {
             maxLength={11}
           />
         </FormControl>
-        <Button
+        <AnimatedButton
           colorScheme="blue"
           size="lg"
           w="full"
           onClick={handleBuscar}
         >
           BUSCAR
-        </Button>
+        </AnimatedButton>
       </VStack>
     </Box>
   )

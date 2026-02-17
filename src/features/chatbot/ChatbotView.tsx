@@ -4,12 +4,12 @@ import {
   Heading,
   Text,
   Input,
-  Button,
   HStack,
   List,
   ListItem,
   Badge,
 } from '@chakra-ui/react'
+import { AnimatedButton } from '../../components/AnimatedButton'
 import { processCountryResponse, type ChatbotResponse } from './chatbotService'
 
 const MENSAJE_INICIAL = 'Indique el país de la empresa extranjera con la que planea operar.'
@@ -83,9 +83,9 @@ export function ChatbotView() {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && enviar()}
             />
-            <Button colorScheme="blue" onClick={enviar}>
+            <AnimatedButton colorScheme="blue" onClick={enviar}>
               Enviar
-            </Button>
+            </AnimatedButton>
           </HStack>
         </Box>
       </Box>

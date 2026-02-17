@@ -1,4 +1,5 @@
-import { Box, Heading, Text, Button, VStack, useToast } from '@chakra-ui/react'
+import { Box, Heading, Text, VStack, useToast } from '@chakra-ui/react'
+import { AnimatedButton } from '../../components/AnimatedButton'
 import { useRiskMatrixContext } from '../../context/RiskMatrixContext'
 
 interface SummaryExportViewProps {
@@ -33,9 +34,9 @@ export function SummaryExportView({ profileId }: SummaryExportViewProps) {
         <Text fontSize="sm">Documentos verificados y pendientes según resultados de búsqueda.</Text>
         <Text fontSize="sm">Observaciones legales: campo disponible en flujo de revisión.</Text>
       </VStack>
-      <Button colorScheme="blue" size="lg" w="full" onClick={handleGenerarReporte}>
+      <AnimatedButton colorScheme="blue" size="lg" w="full" onClick={handleGenerarReporte}>
         Generar Reporte SPLAF (Simulado)
-      </Button>
+      </AnimatedButton>
       <Text fontSize="xs" color="gray.500" mt={4} textAlign="center">
         Información simulada para fines demostrativos. La presente herramienta no sustituye asesoría legal especializada.
       </Text>

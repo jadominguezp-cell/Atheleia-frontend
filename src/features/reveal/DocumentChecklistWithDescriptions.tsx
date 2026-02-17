@@ -4,12 +4,12 @@ import {
   Text,
   List,
   ListItem,
-  Button,
   HStack,
   Badge,
   Checkbox,
   VStack,
 } from '@chakra-ui/react'
+import { AnimatedButton } from '../../components/AnimatedButton'
 import { DOCUMENTOS_REVEAL } from '../../types/documentoReveal'
 
 interface DocumentChecklistWithDescriptionsProps {
@@ -90,9 +90,9 @@ export function DocumentChecklistWithDescriptions({ onContinue }: DocumentCheckl
       </Box>
 
       {onContinue && (
-        <Button colorScheme="blue" size="lg" w="full" onClick={onContinue}>
+        <AnimatedButton colorScheme="blue" size="lg" w="full" onClick={onContinue}>
           Ver resultados de búsqueda
-        </Button>
+        </AnimatedButton>
       )}
     </Box>
   )

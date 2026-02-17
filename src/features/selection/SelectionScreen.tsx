@@ -1,4 +1,5 @@
-import { Box, Heading, Text, Card, CardBody, CardFooter, Button, Grid } from '@chakra-ui/react'
+import { Box, Heading, Text, Card, CardBody, CardFooter, Grid } from '@chakra-ui/react'
+import { AnimatedButton } from '../../components/AnimatedButton'
 
 interface SelectionScreenProps {
   onPeruvian: () => void
@@ -29,9 +30,9 @@ export function SelectionScreen({ onPeruvian, onForeign }: SelectionScreenProps)
             </Text>
           </CardBody>
           <CardFooter pt={0}>
-            <Button colorScheme="blue" size="md" w="full" onClick={onPeruvian}>
+            <AnimatedButton colorScheme="blue" size="md" w="full" onClick={onPeruvian}>
               Continuar
-            </Button>
+            </AnimatedButton>
           </CardFooter>
         </Card>
         <Card
@@ -51,9 +52,9 @@ export function SelectionScreen({ onPeruvian, onForeign }: SelectionScreenProps)
             </Text>
           </CardBody>
           <CardFooter pt={0}>
-            <Button variant="outline" colorScheme="blue" size="md" w="full" onClick={onForeign}>
+            <AnimatedButton variant="outline" colorScheme="blue" size="md" w="full" onClick={onForeign}>
               Consultar requisitos
-            </Button>
+            </AnimatedButton>
           </CardFooter>
         </Card>
       </Grid>
