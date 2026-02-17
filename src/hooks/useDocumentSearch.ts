@@ -21,9 +21,11 @@ export function useDocumentSearch() {
     }
   }, [])
 
-  const foundAutomatically = documents.filter((d) => d.found && d.automatizable)
+  const foundAutomatically = documents.filter(
+    (d) => d.found && d.automatizable && d.state === 'encontrado',
+  )
   const requireLegalAnalysis = documents.filter(
-    (d) => !d.found || !d.automatizable || d.state === 'coinicidencia_parcial' || d.state === 'requiere_aclaracion',
+    (d) => !(d.found && d.automatizable && d.state === 'encontrado'),
   )
 
   return {

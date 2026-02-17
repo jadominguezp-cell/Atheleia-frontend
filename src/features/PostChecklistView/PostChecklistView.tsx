@@ -75,6 +75,15 @@ export function PostChecklistView({
     ticketsDrawer.onOpen()
   }, [ticketsDrawer, evidenceDrawer])
 
+  const handleSaveTicket = useCallback(
+    (updated: LegalReviewTicket) => {
+      setSelectedTicket(updated)
+      ticketsDrawer.onClose()
+      toast({ title: 'Ticket guardado (simulado)', status: 'success', duration: 2000 })
+    },
+    [ticketsDrawer, toast],
+  )
+
   return (
     <Box maxW="1400px" mx="auto" py={4} px={4}>
       <Grid
@@ -151,6 +160,7 @@ export function PostChecklistView({
         isOpen={ticketsDrawer.isOpen}
         onClose={ticketsDrawer.onClose}
         ticket={selectedTicket}
+        onSave={handleSaveTicket}
       />
     </Box>
   )

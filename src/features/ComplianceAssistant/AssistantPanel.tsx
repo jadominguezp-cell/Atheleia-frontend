@@ -1,4 +1,5 @@
-import { Box, Heading, Text, Textarea, Button, VStack } from '@chakra-ui/react'
+import { useRef } from 'react'
+import { Box, Heading, Text, Textarea, Button } from '@chakra-ui/react'
 
 interface AssistantPanelProps {
   context?: string
@@ -7,6 +8,14 @@ interface AssistantPanelProps {
 }
 
 export function AssistantPanel({ context, suggestedResponse, onConfirm }: AssistantPanelProps) {
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
+
+  const handleConfirm = () => {
+    if (!onConfirm) return
+    const value = textareaRef.current?.value ?? suggestedResponse ?? ''
+    onConfirm(value)
+  }
+
   return (
     <Box bg="white" borderRadius="md" borderWidth="1px" p={4} shadow="sm">
       <Heading size="xs" mb={2}>ComplianceAssistant</Heading>
@@ -17,13 +26,14 @@ export function AssistantPanel({ context, suggestedResponse, onConfirm }: Assist
         <Text fontSize="xs" color="gray.500" mb={2}>Contexto: {context}</Text>
       )}
       <Textarea
+        ref={textareaRef}
         size="sm"
         rows={4}
         placeholder="Plantilla de respuesta con evidencia..."
         defaultValue={suggestedResponse}
       />
       {onConfirm && (
-        <Button size="xs" mt={2} colorScheme="blue" onClick={() => onConfirm('')}>
+        <Button size="xs" mt={2} colorScheme="blue" onClick={handleConfirm}>
           Confirmar y adjuntar
         </Button>
       )}

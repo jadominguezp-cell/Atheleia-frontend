@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import {
   Drawer,
   DrawerBody,
@@ -14,7 +15,7 @@ import {
   VStack,
   Text,
 } from '@chakra-ui/react'
-import type { LegalReviewTicket } from '../../domain/tickets/types'
+import type { LegalReviewTicket, TicketPriority } from '../../domain/tickets/types'
 
 interface TicketsDrawerProps {
   isOpen: boolean
@@ -24,7 +25,31 @@ interface TicketsDrawerProps {
 }
 
 export function TicketsDrawer({ isOpen, onClose, ticket, onSave }: TicketsDrawerProps) {
+  const [priority, setPriority] = useState<TicketPriority>('media')
+  const [assignedTeam, setAssignedTeam] = useState('')
+  const [suggestedResponse, setSuggestedResponse] = useState('')
+
+  useEffect(() => {
+    if (ticket) {
+      setPriority(ticket.priority)
+      setAssignedTeam(ticket.assignedTeam ?? '')
+      setSuggestedResponse(ticket.suggestedResponse ?? '')
+    }
+  }, [ticket, isOpen])
+
   if (!ticket) return null
+
+  const handleSave = () => {
+    const updated: LegalReviewTicket = {
+      ...ticket,
+      priority,
+      assignedTeam,
+      suggestedResponse: suggestedResponse || undefined,
+    }
+    onSave?.(updated)
+    onClose()
+  }
+
   return (
     <Drawer isOpen={isOpen} placement="right" onClose={onClose} size="md">
       <DrawerOverlay />
@@ -47,7 +72,7 @@ export function TicketsDrawer({ isOpen, onClose, ticket, onSave }: TicketsDrawer
             </FormControl>
             <FormControl>
               <FormLabel fontSize="sm">Prioridad</FormLabel>
-              <Select size="sm" defaultValue={ticket.priority}>
+              <Select size="sm" value={priority} onChange={(e) => setPriority(e.target.value as TicketPriority)}>
                 <option value="alta">Alta</option>
                 <option value="media">Media</option>
                 <option value="baja">Baja</option>
@@ -55,18 +80,22 @@ export function TicketsDrawer({ isOpen, onClose, ticket, onSave }: TicketsDrawer
             </FormControl>
             <FormControl>
               <FormLabel fontSize="sm">Equipo asignado</FormLabel>
-              <Input size="sm" defaultValue={ticket.assignedTeam} />
+              <Input size="sm" value={assignedTeam} onChange={(e) => setAssignedTeam(e.target.value)} />
             </FormControl>
             <FormControl>
               <FormLabel fontSize="sm">Respuesta sugerida (ComplianceAssistant)</FormLabel>
-              <Textarea size="sm" defaultValue={ticket.suggestedResponse} rows={4} placeholder="Editar plantilla..." />
+              <Textarea
+                size="sm"
+                value={suggestedResponse}
+                onChange={(e) => setSuggestedResponse(e.target.value)}
+                rows={4}
+                placeholder="Editar plantilla..."
+              />
             </FormControl>
             <Text fontSize="xs" color="gray.500">Información simulada — No sustituye asesoría legal.</Text>
-            {onSave && (
-              <Button size="sm" colorScheme="blue" onClick={() => onSave(ticket)}>
-                Guardar y cerrar
-              </Button>
-            )}
+            <Button size="sm" colorScheme="blue" onClick={handleSave}>
+              Guardar y cerrar
+            </Button>
           </VStack>
         </DrawerBody>
       </DrawerContent>
