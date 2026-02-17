@@ -5,12 +5,10 @@ import {
   Text,
   Input,
   Button,
-  VStack,
   HStack,
   List,
   ListItem,
   Badge,
-  useToast,
 } from '@chakra-ui/react'
 import { processCountryResponse, type ChatbotResponse } from './chatbotService'
 
@@ -22,7 +20,6 @@ export function ChatbotView() {
   ])
   const [input, setInput] = useState('')
   const [respuesta, setRespuesta] = useState<ChatbotResponse | null>(null)
-  const toast = useToast()
   const bottomRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {

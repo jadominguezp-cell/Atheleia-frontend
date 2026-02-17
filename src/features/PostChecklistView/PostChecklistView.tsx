@@ -37,8 +37,9 @@ function createMockTicket(doc: Document): LegalReviewTicket {
 export function PostChecklistView({
   foundAutomatically,
   requireLegalAnalysis,
-  profileId,
+  profileId: _profileId,
 }: PostChecklistViewProps) {
+  void _profileId
   const [selectedDoc, setSelectedDoc] = useState<Document | null>(null)
   const [selectedTicket, setSelectedTicket] = useState<LegalReviewTicket | null>(null)
   const evidenceDrawer = useDisclosure()
@@ -50,15 +51,15 @@ export function PostChecklistView({
     evidenceDrawer.onOpen()
   }, [evidenceDrawer])
 
-  const handleMarcarRevisado = useCallback((doc: Document) => {
+  const handleMarcarRevisado = useCallback((_doc: Document) => {
     toast({ title: 'Marcado como revisado (mock)', status: 'success', duration: 2000 })
   }, [toast])
 
-  const handleSolicitarInfo = useCallback((doc: Document) => {
+  const handleSolicitarInfo = useCallback((_doc: Document) => {
     toast({ title: 'Solicitud de información registrada (mock)', status: 'info', duration: 2000 })
   }, [toast])
 
-  const handleComentar = useCallback((doc: Document) => {
+  const handleComentar = useCallback((_doc: Document) => {
     toast({ title: 'Comentario (mock)', status: 'info', duration: 2000 })
   }, [toast])
 

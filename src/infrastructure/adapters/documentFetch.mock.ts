@@ -1,8 +1,8 @@
 import type { DocumentType } from '../../domain/documents/types'
 import { createDocumentStub } from '../../domain/documents/models'
-import { DOCUMENT_TYPE_LABEL } from '../../domain/documents/models'
 import { generateReason } from '../../application/services/DocumentReasonService'
 import type { DocumentResult } from '../../application/services/DocumentFetchService'
+import type { OperationContext } from '../../application/services/DocumentReasonService'
 
 const TYPES: DocumentType[] = [
   'consulta_reniec',
@@ -30,7 +30,10 @@ const AUTOMATIZABLE: Record<DocumentType, boolean> = {
 export async function fetchDocumentsByProfile(profileId: string): Promise<DocumentResult[]> {
   const results: DocumentResult[] = []
   const now = new Date().toISOString()
-  const context = { profileId, tipo: profileId.length === 8 ? 'natural' : 'juridica' }
+  const context: OperationContext = {
+    profileId,
+    tipo: profileId.length === 8 ? 'natural' : 'juridica',
+  }
 
   TYPES.forEach((type, i) => {
     const automatizable = AUTOMATIZABLE[type]
