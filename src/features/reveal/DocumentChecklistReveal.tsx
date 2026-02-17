@@ -6,10 +6,15 @@ import {
   Badge,
   List,
   ListItem,
+  Button,
 } from '@chakra-ui/react'
 import { DOCUMENTOS_REVEAL } from '../../types/documentoReveal'
 
-export function DocumentChecklistReveal() {
+interface DocumentChecklistRevealProps {
+  onContinue?: () => void
+}
+
+export function DocumentChecklistReveal({ onContinue }: DocumentChecklistRevealProps) {
   return (
     <Box maxW="720px" mx="auto" mt={{ base: 6, md: 10 }} mb={10}>
       <Heading size="md" mb={2} color="gray.800">
@@ -48,6 +53,11 @@ export function DocumentChecklistReveal() {
           ))}
         </List>
       </Box>
+      {onContinue && (
+        <Button mt={6} colorScheme="blue" size="lg" w="full" onClick={onContinue}>
+          Ver resultados de búsqueda
+        </Button>
+      )}
     </Box>
   )
 }

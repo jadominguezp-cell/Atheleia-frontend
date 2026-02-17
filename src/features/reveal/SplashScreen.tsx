@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { Box, Text } from '@chakra-ui/react'
 
-const SPLASH_DURATION_MS = 2500
+const SPLASH_DURATION_MS = 1800
 
 interface SplashScreenProps {
   onComplete: () => void
@@ -22,7 +22,7 @@ export function SplashScreen({ onComplete }: SplashScreenProps) {
       display="flex"
       alignItems="center"
       justifyContent="center"
-      sx={{ animation: 'splashFade 2.5s ease-out forwards' }}
+      sx={{ animation: 'splashFade 1.8s ease-out forwards' }}
     >
       <Text
         color="white"
@@ -34,8 +34,9 @@ export function SplashScreen({ onComplete }: SplashScreenProps) {
       </Text>
       <style>{`
         @keyframes splashFade {
-          0%, 70% { opacity: 1; }
-          95% { opacity: 1; }
+          0% { opacity: 0; }
+          15% { opacity: 1; }
+          80% { opacity: 1; }
           100% { opacity: 0; visibility: hidden; pointer-events: none; }
         }
       `}</style>

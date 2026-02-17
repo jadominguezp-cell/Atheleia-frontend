@@ -3,36 +3,58 @@ import { ChakraProvider } from '@chakra-ui/react'
 import { Box } from '@chakra-ui/react'
 import { theme } from './theme'
 import { SplashScreen } from './features/reveal/SplashScreen'
+import { SelectionScreen } from './features/selection/SelectionScreen'
 import { SearchScreen } from './features/reveal/SearchScreen'
 import { LoadingReveal } from './features/reveal/LoadingReveal'
-import { DocumentChecklistReveal } from './features/reveal/DocumentChecklistReveal'
+import { DocumentChecklistWithDescriptions } from './features/reveal/DocumentChecklistWithDescriptions'
+import { PostChecklistView } from './features/PostChecklistView/PostChecklistView'
+import { RiskMatrixView } from './features/risk/RiskMatrixView'
+import { SummaryExportView } from './features/summary/SummaryExportView'
+import { ChatbotView } from './features/chatbot/ChatbotView'
+import { useDocumentSearch } from './hooks/useDocumentSearch'
+import { RiskMatrixProvider } from './context/RiskMatrixContext'
 
 const LOADING_DURATION_MS = 2800
 
-type RevealPhase = 'splash' | 'search' | 'loading' | 'checklist'
+type Branch = 'peru' | 'foreign' | null
+type PeruStep = 'search' | 'loading' | 'checklist' | 'results' | 'risk' | 'summary'
 
 function App() {
-  const [phase, setPhase] = useState<RevealPhase>('splash')
-  const [, setDniOrRuc] = useState<string>('')
+  const [splashDone, setSplashDone] = useState(false)
+  const [branch, setBranch] = useState<Branch>(null)
+  const [peruStep, setPeruStep] = useState<PeruStep>('search')
+  const [profileId, setProfileId] = useState('')
 
-  const handleSplashComplete = useCallback(() => setPhase('search'), [])
+  const { foundAutomatically, requireLegalAnalysis, loading, searchByProfile } = useDocumentSearch()
+
+  const handleSplashComplete = useCallback(() => setSplashDone(true), [])
+  const handlePeruvian = useCallback(() => setBranch('peru'), [])
+  const handleForeign = useCallback(() => setBranch('foreign'), [])
+
   const handleSearch = useCallback((value: string) => {
-    setDniOrRuc(value)
-    setPhase('loading')
+    setProfileId(value)
+    setPeruStep('loading')
   }, [])
 
   useEffect(() => {
-    if (phase !== 'loading') return
-    const t = setTimeout(() => setPhase('checklist'), LOADING_DURATION_MS)
+    if (peruStep !== 'loading') return
+    const t = setTimeout(() => setPeruStep('checklist'), LOADING_DURATION_MS)
     return () => clearTimeout(t)
-  }, [phase])
+  }, [peruStep])
+
+  useEffect(() => {
+    if (peruStep === 'results' && profileId) searchByProfile(profileId)
+  }, [peruStep, profileId, searchByProfile])
+
+  const showHeader = splashDone && branch !== null
+  const showFooter = splashDone
 
   return (
     <ChakraProvider theme={theme}>
-      {phase === 'splash' && <SplashScreen onComplete={handleSplashComplete} />}
+      {!splashDone && <SplashScreen onComplete={handleSplashComplete} />}
 
       <Box minH="100vh" bg="gray.50">
-        {(phase === 'search' || phase === 'loading' || phase === 'checklist') && (
+        {showHeader && (
           <Box as="header" bg="brand.700" color="white" py={4} px={6}>
             <Box fontWeight="600" letterSpacing="wide">Aletheia Compliance</Box>
             <Box fontSize="sm" color="gray.300" mt={1}>Módulo de debida diligencia SPLAF</Box>
@@ -40,10 +62,48 @@ function App() {
         )}
 
         <Box as="main" minH="calc(100vh - 56px)" py={4} px={4}>
-          {phase === 'search' && <SearchScreen onSearch={handleSearch} />}
-          {phase === 'loading' && <LoadingReveal />}
-          {phase === 'checklist' && <DocumentChecklistReveal />}
+          {splashDone && branch === null && (
+            <SelectionScreen onPeruvian={handlePeruvian} onForeign={handleForeign} />
+          )}
+
+          {branch === 'foreign' && <ChatbotView />}
+
+          {branch === 'peru' && (
+            <>
+              {peruStep === 'search' && <SearchScreen onSearch={handleSearch} />}
+              {peruStep === 'loading' && <LoadingReveal />}
+              {peruStep === 'checklist' && (
+                <DocumentChecklistWithDescriptions onContinue={() => setPeruStep('results')} />
+              )}
+              {peruStep === 'results' && (
+                loading ? (
+                  <LoadingReveal />
+                ) : (
+                  <RiskMatrixProvider>
+                    <PostChecklistView
+                      foundAutomatically={foundAutomatically}
+                      requireLegalAnalysis={requireLegalAnalysis}
+                      profileId={profileId}
+                    />
+                    <Box mt={8}>
+                      <RiskMatrixView />
+                    </Box>
+                    <Box mt={8}>
+                      <SummaryExportView profileId={profileId} />
+                    </Box>
+                  </RiskMatrixProvider>
+                )
+              )}
+            </>
+          )}
         </Box>
+
+        {showFooter && (
+          <Box as="footer" bg="gray.800" color="gray.400" py={4} px={6} fontSize="sm" textAlign="center">
+            <Box>Información simulada para fines demostrativos.</Box>
+            <Box mt={1}>La presente herramienta no sustituye asesoría legal especializada.</Box>
+          </Box>
+        )}
       </Box>
     </ChakraProvider>
   )

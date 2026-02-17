@@ -1,0 +1,14 @@
+{
+  "description": "Mock de documentos por tipo (sourceId y requiredBy).",
+  "sources": ["RENIEC", "SUNAT", "Migraciones", "InfoGov", "EsSalud", "SUNARP", "UIF", "ONU"],
+  "documentTypes": [
+    "consulta_reniec",
+    "consulta_sunat",
+    "consulta_migraciones",
+    "consulta_infogob",
+    "consulta_essalud",
+    "consulta_centrales_riesgo",
+    "consulta_sunarp",
+    "solicitud_ficha_ruc"
+  ]
+}
