@@ -19,7 +19,7 @@ export function ComplianceReport({
 }: ComplianceReportProps) {
   return (
     <Box>
-      <Heading size="sm" mb={3}>Resumen de cumplimiento SPLAF</Heading>
+      <Heading size="sm" mb={3}>Resumen de cumplimiento SPLAFT</Heading>
       <Box bg="gray.50" p={4} borderRadius="md" borderWidth="1px">
         <VStack align="stretch" spacing={2}>
           <HStack justify="space-between">
@@ -42,7 +42,7 @@ export function ComplianceReport({
             </Text>
           </Box>
           <Text fontSize="xs" color="gray.500" borderTopWidth="1px" borderStyle="dashed" pt={2} mt={2}>
-            Este reporte no sustituye una asesoría legal. Es una herramienta de apoyo para debida diligencia y cumplimiento SPLAF.
+            Este reporte no sustituye una asesoría legal. Es una herramienta de apoyo para debida diligencia y cumplimiento SPLAFT.
           </Text>
           <ButtonGroup size="sm" mt={3}>
             <Button colorScheme="blue" onClick={onExportPdf}>Exportar reporte en PDF (mock)</Button>

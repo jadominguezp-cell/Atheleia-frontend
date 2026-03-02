@@ -32,7 +32,7 @@ export function OperationsTable({
     <Box>
       <Heading size="sm" mb={1}>Operaciones activas</Heading>
       <Text fontSize="sm" color="gray.600" mb={3}>
-        Vista general de operaciones en curso y su estado de cumplimiento SPLAF.
+        Vista general de operaciones en curso y su estado de cumplimiento SPLAFT.
       </Text>
       <TableContainer borderWidth="1px" borderRadius="md" bg="white" overflowX="auto" maxW="100%">
         <Table size="sm" variant="simple" width="100%" sx={{ tableLayout: 'fixed' }}>
@@ -44,7 +44,7 @@ export function OperationsTable({
               <Th minW="100px">Vendedor (extranjero)</Th>
               <Th w="90px">País</Th>
               <Th w="110px">Monto</Th>
-              <Th w="100px">Estado SPLAF</Th>
+              <Th w="100px">Estado SPLAFT</Th>
               <Th w="80px">Riesgo</Th>
             </Tr>
           </Thead>

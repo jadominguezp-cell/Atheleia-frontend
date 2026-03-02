@@ -1,19 +1,21 @@
-export type Probabilidad = 'Baja' | 'Media' | 'Alta'
-export type Impacto = 'Bajo' | 'Medio' | 'Alto'
+export type ProbabilidadNivel = 1 | 2 | 3
+export type ImpactoNivel = 1 | 2 | 3
 export type NivelRiesgo = 'Bajo' | 'Medio' | 'Alto'
-export type TipoIndicador = 'Referencia' | 'Personalizado'
 
-export interface IndicadorRiesgo {
+export type RiesgoAsociado = 'Cliente' | 'Proveedor' | 'Trabajadores' | 'Producto' | 'Canal' | 'Zona Geográfica'
+
+export interface RiskEvent {
   id: string
-  nombre: string
-  tipo: TipoIndicador
-  probabilidad: Probabilidad
-  impacto: Impacto
-  nivelRiesgo: NivelRiesgo
-  observaciones: string
+  codigo: string
+  evento: string
+  causa: string
+  riesgoAsociado: RiesgoAsociado
+  probabilidad: ProbabilidadNivel
+  impacto: ImpactoNivel
+  riesgoInherente: number
 }
 
 export interface MatrizRiesgoState {
-  indicadores: IndicadorRiesgo[]
+  events: RiskEvent[]
   riesgoGlobal: NivelRiesgo
 }

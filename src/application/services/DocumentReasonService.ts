@@ -7,7 +7,7 @@ export interface OperationContext {
 
 const REASONS: Record<DocumentType, string> = {
   consulta_reniec:
-    'Verificar identidad y coincidencia de datos personales; requisito básico de identificación (SPLAFT).',
+    'Verificar identidad y coincidencia de datos personales; requisito básico de identificación (SPLAFTT).',
   consulta_sunat:
     'Confirmar RUC, actividad económica y vigencia tributaria para clasificación de riesgo fiscal.',
   consulta_migraciones:
@@ -30,5 +30,5 @@ export function generateReason(
   _context: OperationContext,
 ): string {
   const base = REASONS[documentType] ?? ''
-  return `${base} Res. SBS N° 789-2018 / SPLAFT.`
+  return `${base} Res. SBS N° 789-2018 / SPLAFTT.`
 }

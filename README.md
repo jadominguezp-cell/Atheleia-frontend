@@ -1,4 +1,4 @@
-# Aletheia — Compliance y debida diligencia SPLAF
+# Aletheia — Compliance y debida diligencia SPLAFT
 
 ## Contexto
 

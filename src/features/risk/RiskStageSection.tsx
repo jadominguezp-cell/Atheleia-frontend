@@ -12,7 +12,7 @@ export function RiskStageSection() {
 
   const handleMockPdf = () => {
     alert(
-      'Exportación a PDF simulada.\n\nEn una versión completa, aquí se generaría un reporte formal de cumplimiento SPLAF en formato PDF.',
+      'Exportación a PDF simulada.\n\nEn una versión completa, aquí se generaría un reporte formal de cumplimiento SPLAFT en formato PDF.',
     )
   }
   const handleMockZip = () => {

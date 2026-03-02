@@ -3,7 +3,7 @@ import { useChat } from '../../hooks'
 import type { MensajeChat } from '../../types'
 
 const SUGERENCIAS = [
-  '¿Cuáles son las principales diferencias de requisitos SPLAF entre clientes nacionales y extranjeros?',
+  '¿Cuáles son las principales diferencias de requisitos SPLAFT entre clientes nacionales y extranjeros?',
   '¿Por qué es obligatoria la declaración de beneficiario final en el marco de la Resolución SBS N.° 789-2018?',
   '¿Cuál es el objetivo de la certificación de origen lícito de fondos en la debida diligencia?',
 ]
@@ -20,7 +20,7 @@ function ChatMessage({ msg }: { msg: MensajeChat }) {
       borderRadius="md"
     >
       <HStack fontSize="xs" color={isUser ? 'blue.100' : 'gray.500'} mb={1}>
-        <span>{isUser ? 'Usted' : 'Asistente SPLAF'}</span>
+        <span>{isUser ? 'Usted' : 'Asistente SPLAFT'}</span>
         <span>
           {new Date(msg.timestamp).toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit' })}
         </span>
@@ -31,13 +31,15 @@ function ChatMessage({ msg }: { msg: MensajeChat }) {
 }
 
 export function ChatSection() {
-  const { mensajes, pregunta, setPregunta, enviar } = useChat()
+  const { mensajes, pregunta, setPregunta, enviar, isLoading } = useChat()
+  // ... (leaving existing component)
+  // Wait, I need to provide the full modified chunk. I will grab it from line 34 to 72.
 
   return (
     <Box bg="white" p={6} borderRadius="md" borderWidth="1px" shadow="sm">
       <Heading size="sm" mb={1}>Chatbot legal interno</Heading>
       <Text fontSize="sm" color="gray.600" mb={2}>
-        Asistente interno para orientación general sobre requisitos SPLAF, diferencias entre clientes nacionales y extranjeros y justificación legal de los documentos solicitados.
+        Asistente interno para orientación general sobre requisitos SPLAFT, diferencias entre clientes nacionales y extranjeros y justificación legal de los documentos solicitados.
       </Text>
       <Text fontSize="xs" color="gray.500" mb={4}>
         La información proporcionada es referencial y no sustituye una asesoría legal personalizada.
@@ -62,11 +64,12 @@ export function ChatSection() {
             size="sm"
             mt={3}
             rows={3}
-            placeholder="Formule aquí su consulta general sobre requisitos SPLAF..."
+            placeholder="Formule aquí su consulta general sobre requisitos SPLAFT..."
             value={pregunta}
             onChange={(e) => setPregunta(e.target.value)}
+            disabled={isLoading}
           />
-          <Button size="sm" colorScheme="blue" mt={2} onClick={enviar}>
+          <Button size="sm" colorScheme="blue" mt={2} onClick={enviar} isLoading={isLoading}>
             Enviar consulta
           </Button>
         </Box>

@@ -1,4 +1,4 @@
-/** Respuestas del asistente SPLAF (Single Responsibility, extensible) */
+/** Respuestas del asistente SPLAFT (Single Responsibility, extensible) */
 export function responderPreguntaSplaf(pregunta: string): string {
   const p = pregunta.toLowerCase()
 
@@ -14,7 +14,7 @@ export function responderPreguntaSplaf(pregunta: string): string {
     return (
       'La declaración de beneficiario final es obligatoria para identificar a la persona natural que ' +
       'ejerce el control efectivo o la propiedad real de la empresa. Es un elemento central de las políticas ' +
-      'de conocimiento del cliente (KYC) exigidas por la normativa SPLAF.'
+      'de conocimiento del cliente (KYC) exigidas por la normativa SPLAFT.'
     )
   }
   if (p.includes('origen') && p.includes('fond')) {
@@ -40,7 +40,7 @@ export function responderPreguntaSplaf(pregunta: string): string {
   }
   return (
     'Esta herramienta brinda información referencial sobre requisitos de identificación, verificación y ' +
-    'gestión de riesgo bajo la normativa SPLAF. Para un análisis concreto de un caso específico, se recomienda ' +
+    'gestión de riesgo bajo la normativa SPLAFT. Para un análisis concreto de un caso específico, se recomienda ' +
     'contar siempre con asesoría legal personalizada.'
   )
 }

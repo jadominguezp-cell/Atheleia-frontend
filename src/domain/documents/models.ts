@@ -35,7 +35,7 @@ export function createDocumentStub(
     found: false,
     state: 'no_encontrado',
     confidenceScore: 0,
-    requiredBy: ['Res. SBS N° 789-2018 / SPLAFT'],
+    requiredBy: ['Res. SBS N° 789-2018 / SPLAFTT'],
     shortReason: '',
     evidenceUrls: [],
     timestamp: new Date().toISOString(),

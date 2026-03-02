@@ -61,7 +61,7 @@ export function KYCStageSection() {
         <Box>
           <Heading size="sm" mb={1}>Etapa 1: Identificación del cliente (KYC)</Heading>
           <Text fontSize="sm" color="gray.600">
-            La operación no puede cerrarse sin contar con información previa y documentada del cliente, conforme a la normativa SPLAF.
+            La operación no puede cerrarse sin contar con información previa y documentada del cliente, conforme a la normativa SPLAFT.
           </Text>
         </Box>
         <Box minW="220px">
@@ -73,7 +73,7 @@ export function KYCStageSection() {
 
       <Grid templateColumns={{ base: '1fr', lg: 'minmax(0, 1.8fr) minmax(280px, 1fr)' }} gap={6}>
         <Box minW={0} overflow="hidden">
-            <DocumentChecklist
+          <DocumentChecklist
             documentos={operacionSeleccionada.documentos}
             clienteTipo={clienteLabel}
             onCargarMock={handleCargarMock}

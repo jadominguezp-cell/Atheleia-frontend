@@ -55,7 +55,7 @@ interface Document {
 }
 ```
 
-**shortReason** se genera mediante `DocumentReasonService.generateReason(documentType, operationContext)` e incluye propósito + referencia normativa (SPLAFT / Res. SBS N° 789-2018).
+**shortReason** se genera mediante `DocumentReasonService.generateReason(documentType, operationContext)` e incluye propósito + referencia normativa (SPLAFTT / Res. SBS N° 789-2018).
 
 ---
 

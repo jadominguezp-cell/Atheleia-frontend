@@ -1,58 +1,73 @@
 import { useState, useCallback, useMemo } from 'react'
-import type { IndicadorRiesgo, Probabilidad, Impacto, NivelRiesgo } from '../domain/risk/risk.types'
+import type { RiskEvent, NivelRiesgo } from '../domain/risk/risk.types'
 import { calcularNivelRiesgo, calcularRiesgoGlobal } from '../application/services/riskCalculationService'
 
-const INDICADORES_REFERENCIA: Omit<IndicadorRiesgo, 'id'>[] = [
-  { nombre: 'Coincidencia en listas restrictivas internacionales', tipo: 'Referencia', probabilidad: 'Media', impacto: 'Alto', nivelRiesgo: 'Medio', observaciones: '' },
-  { nombre: 'Identificación como Persona Expuesta Políticamente (PEP)', tipo: 'Referencia', probabilidad: 'Baja', impacto: 'Alto', nivelRiesgo: 'Medio', observaciones: '' },
-  { nombre: 'Inconsistencias patrimoniales', tipo: 'Referencia', probabilidad: 'Media', impacto: 'Medio', nivelRiesgo: 'Medio', observaciones: '' },
-  { nombre: 'Operaciones con jurisdicciones de alto riesgo', tipo: 'Referencia', probabilidad: 'Media', impacto: 'Alto', nivelRiesgo: 'Medio', observaciones: '' },
-  { nombre: 'Estructura societaria compleja o poco transparente', tipo: 'Referencia', probabilidad: 'Baja', impacto: 'Medio', nivelRiesgo: 'Bajo', observaciones: '' },
-  { nombre: 'Historial crediticio adverso significativo', tipo: 'Referencia', probabilidad: 'Media', impacto: 'Medio', nivelRiesgo: 'Medio', observaciones: '' },
-  { nombre: 'Actividad económica no consistente con volumen de operación', tipo: 'Referencia', probabilidad: 'Baja', impacto: 'Alto', nivelRiesgo: 'Medio', observaciones: '' },
+const INITIAL_EVENTS: Omit<RiskEvent, 'id' | 'riesgoInherente'>[] = [
+  {
+    codigo: 'R01',
+    evento: 'Lavado de activos a través de clientes ficticios',
+    causa: 'Falta de debida diligencia en el conocimiento del cliente',
+    riesgoAsociado: 'Cliente',
+    probabilidad: 2,
+    impacto: 3,
+  },
+  {
+    codigo: 'R02',
+    evento: 'Uso de canales digitales para transacciones anónimas',
+    causa: 'Debilidades en la autenticación de identidad en línea',
+    riesgoAsociado: 'Canal',
+    probabilidad: 2,
+    impacto: 2,
+  },
 ]
 
-function buildIndicador(overrides: Partial<IndicadorRiesgo> & { nombre: string; tipo: IndicadorRiesgo['tipo']; probabilidad: Probabilidad; impacto: Impacto }, id: string): IndicadorRiesgo {
-  const nivelRiesgo = calcularNivelRiesgo(overrides.probabilidad, overrides.impacto)
+function buildEvent(data: Omit<RiskEvent, 'id' | 'riesgoInherente'>, id: string): RiskEvent {
   return {
+    ...data,
     id,
-    nombre: overrides.nombre,
-    tipo: overrides.tipo,
-    probabilidad: overrides.probabilidad,
-    impacto: overrides.impacto,
-    nivelRiesgo,
-    observaciones: overrides.observaciones ?? '',
+    riesgoInherente: data.probabilidad * data.impacto,
   }
 }
 
 export function useRiskMatrix() {
-  const [indicadores, setIndicadores] = useState<IndicadorRiesgo[]>(() =>
-    INDICADORES_REFERENCIA.map((ind, i) =>
-      buildIndicador({ ...ind }, `ref-${i}`),
-    ),
+  const [events, setEvents] = useState<RiskEvent[]>(() =>
+    INITIAL_EVENTS.map((ev, i) => buildEvent(ev, `event-${i}`)),
   )
 
   const riesgoGlobal = useMemo<NivelRiesgo>(() => {
-    return calcularRiesgoGlobal(indicadores.map((i) => i.nivelRiesgo))
-  }, [indicadores])
+    const niveles = events.map((ev) => calcularNivelRiesgo(ev.probabilidad, ev.impacto))
+    return calcularRiesgoGlobal(niveles)
+  }, [events])
 
-  const updateIndicador = useCallback((id: string, updates: Partial<Pick<IndicadorRiesgo, 'probabilidad' | 'impacto' | 'observaciones'>>) => {
-    setIndicadores((prev) =>
-      prev.map((ind) => {
-        if (ind.id !== id) return ind
-        const prob = updates.probabilidad ?? ind.probabilidad
-        const imp = updates.impacto ?? ind.impacto
-        const nivel = calcularNivelRiesgo(prob, imp)
-        return { ...ind, ...updates, nivelRiesgo: nivel }
+  const updateEvent = useCallback((id: string, updates: Partial<RiskEvent>) => {
+    setEvents((prev) =>
+      prev.map((ev) => {
+        if (ev.id !== id) return ev
+        const newEv = { ...ev, ...updates }
+        newEv.riesgoInherente = newEv.probabilidad * newEv.impacto
+        return newEv
       }),
     )
   }, [])
 
-  const addPersonalizado = useCallback((nombre: string, descripcion: string, probabilidad: Probabilidad, impacto: Impacto) => {
-    const id = `custom-${Date.now()}`
-    const nuevo = buildIndicador({ nombre, tipo: 'Personalizado', probabilidad, impacto, observaciones: descripcion }, id)
-    setIndicadores((prev) => [...prev, nuevo])
+  const addEvent = useCallback(() => {
+    const id = `event-${Date.now()}`
+    const newEvent: RiskEvent = {
+      id,
+      codigo: `R0${events.length + 1}`,
+      evento: '',
+      causa: '',
+      riesgoAsociado: 'Cliente',
+      probabilidad: 1,
+      impacto: 1,
+      riesgoInherente: 1,
+    }
+    setEvents((prev) => [...prev, newEvent])
+  }, [events.length])
+
+  const deleteEvent = useCallback((id: string) => {
+    setEvents((prev) => prev.filter((ev) => ev.id !== id))
   }, [])
 
-  return { indicadores, riesgoGlobal, updateIndicador, addPersonalizado }
+  return { events, riesgoGlobal, updateEvent, addEvent, deleteEvent }
 }

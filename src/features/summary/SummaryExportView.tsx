@@ -12,7 +12,7 @@ export function SummaryExportView({ profileId }: SummaryExportViewProps) {
 
   const handleGenerarReporte = () => {
     toast({
-      title: 'Reporte SPLAF (Simulado)',
+      title: 'Reporte SPLAFT (Simulado)',
       description: 'Se ha generado un PDF simulado con: datos consultados, documentos verificados, pendientes, resultado matriz de riesgo y observaciones legales.',
       status: 'info',
       duration: 5000,
@@ -35,7 +35,7 @@ export function SummaryExportView({ profileId }: SummaryExportViewProps) {
         <Text fontSize="sm">Observaciones legales: campo disponible en flujo de revisión.</Text>
       </VStack>
       <AnimatedButton colorScheme="blue" size="lg" w="full" onClick={handleGenerarReporte}>
-        Generar Reporte SPLAF (Simulado)
+        Generar Reporte SPLAFT (Simulado)
       </AnimatedButton>
       <Text fontSize="xs" color="gray.500" mt={4} textAlign="center">
         Información simulada para fines demostrativos. La presente herramienta no sustituye asesoría legal especializada.

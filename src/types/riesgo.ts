@@ -1,4 +1,4 @@
-/** Nivel de riesgo y factores para matriz SPLAF */
+/** Nivel de riesgo y factores para matriz SPLAFT */
 export type RiesgoNivel = 'BAJO' | 'MEDIO' | 'ALTO'
 
 export interface FactoresRiesgo {

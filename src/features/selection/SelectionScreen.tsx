@@ -26,7 +26,7 @@ export function SelectionScreen({ onPeruvian, onForeign }: SelectionScreenProps)
               Working with a Peruvian company?
             </Heading>
             <Text fontSize="sm" color="gray.600">
-              Validación mediante DNI o RUC conforme normativa SPLAF.
+              Validación mediante DNI o RUC conforme normativa SPLAFT.
             </Text>
           </CardBody>
           <CardFooter pt={0}>

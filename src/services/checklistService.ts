@@ -1,7 +1,7 @@
 import type { ClienteTipo } from '../types/cliente'
 import type { DocumentoRequerido } from '../types/documento'
 
-/** Servicio de creación de checklist SPLAF por tipo de cliente (Single Responsibility) */
+/** Servicio de creación de checklist SPLAFT por tipo de cliente (Single Responsibility) */
 export function crearChecklistBase(tipoCliente: ClienteTipo): DocumentoRequerido[] {
   const base: DocumentoRequerido[] = [
     {
@@ -32,7 +32,7 @@ export function crearChecklistBase(tipoCliente: ClienteTipo): DocumentoRequerido
       id: 'beneficiario-final',
       nombre: 'Declaración de beneficiario final',
       descripcionLegal:
-        'Identifica a la persona natural que detenta el control efectivo o la propiedad real de la empresa, según normativa SPLAF.',
+        'Identifica a la persona natural que detenta el control efectivo o la propiedad real de la empresa, según normativa SPLAFT.',
       obligatorio: true,
       estado: 'NO_CARGADO',
     },

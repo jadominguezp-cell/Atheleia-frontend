@@ -19,6 +19,7 @@ interface PostChecklistViewProps {
   foundAutomatically: Document[]
   requireLegalAnalysis: Document[]
   profileId: string
+  onContinue: () => void
 }
 
 function createMockTicket(doc: Document): LegalReviewTicket {
@@ -38,6 +39,7 @@ export function PostChecklistView({
   foundAutomatically,
   requireLegalAnalysis,
   profileId: _profileId,
+  onContinue,
 }: PostChecklistViewProps) {
   void _profileId
   const [selectedDoc, setSelectedDoc] = useState<Document | null>(null)
@@ -145,9 +147,12 @@ export function PostChecklistView({
         </Box>
       </Grid>
 
-      <Box mt={8}>
+      <Box mt={8} display="flex" justifyContent="space-between" alignItems="center">
         <Button size="sm" variant="outline" colorScheme="blue">
           Exportar evidencia (ZIP/PDF mock)
+        </Button>
+        <Button size="lg" colorScheme="brand" onClick={onContinue}>
+          Continuar a Matriz de Riesgo
         </Button>
       </Box>
 

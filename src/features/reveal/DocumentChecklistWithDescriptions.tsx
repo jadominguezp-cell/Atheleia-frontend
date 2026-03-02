@@ -64,7 +64,7 @@ export function DocumentChecklistWithDescriptions({ onContinue }: DocumentCheckl
         Checklist documental
       </Heading>
       <Text fontSize="sm" color="gray.600" mb={6}>
-        Documentos requeridos conforme normativa SPLAF. Descripción obligatoria por ítem.
+        Documentos requeridos conforme normativa SPLAFT. Descripción obligatoria por ítem.
       </Text>
 
       <Heading size="sm" mb={2} color="gray.700">

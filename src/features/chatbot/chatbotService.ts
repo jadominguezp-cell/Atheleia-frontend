@@ -25,7 +25,7 @@ export function processCountryResponse(pais: string): ChatbotResponse {
     documentosSugeridos: DOCUMENTOS_SUGERIDOS,
     paisAltoRiesgo: altoRiesgo,
     recomendacionDebidaDiligencia: altoRiesgo
-      ? 'Se recomienda aplicar debida diligencia reforzada conforme normativa SPLAF (Res. SBS N° 789-2018) y documentar las medidas adicionales adoptadas.'
+      ? 'Se recomienda aplicar debida diligencia reforzada conforme normativa SPLAFT (Res. SBS N° 789-2018) y documentar las medidas adicionales adoptadas.'
       : 'Conforme al perfil de la contraparte, se sugiere solicitar los documentos mínimos indicados y validar vigencia en origen.',
   }
 }
